@@ -1,0 +1,9 @@
+[
+    {   "caption": "Gradle: generate build.gradle",
+        "command": "test"
+    }
+    ,{
+        "caption": "Gradle: Blame",
+        "command": "test"
+    }
+]
