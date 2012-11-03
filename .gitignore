@@ -1,2 +1,9 @@
 
 .DS_Store
+
+.gradle/*
+
+build.gradle
+
+build/*
+build/reports/tests/base-style.css

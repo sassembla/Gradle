@@ -1,9 +1,13 @@
 [
     {   "caption": "Gradle: build",
-        "command": "build"
+        "command": "gbuild"
     }
     ,{
-        "caption": "Gradle: Blame",
-        "command": "test"
+        "caption": "Gradle: test",
+        "command": "gtest"
+    }
+    ,{
+        "caption": "GradlePlugin: debugggg",
+        "command": "testing"
     }
 ]

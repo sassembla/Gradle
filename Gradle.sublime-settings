@@ -1,0 +1,7 @@
+{
+  "command" : {
+  	"gradle" : "/usr/local/bin/gradle",
+  	"build"	:	"build",
+  	"test"	:	"test"
+  }
+}

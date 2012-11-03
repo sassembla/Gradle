@@ -7,8 +7,10 @@
                 "caption": "Gradle",
                 "children":
                 [
-                    {"id": "Gradle", "caption": "Build current project", "command": "build" },
-                    {"id": "Gradle", "caption": "Test current project", "command": "test" }
+                    {"id": "Gradle", "caption": "Build current project", "command": "gbuild" },
+                    {"id": "Gradle", "caption": "Test current project", "command": "gtest" },
+                    {"id": "Gradle", "caption": "Testing", "command": "testing" }
+
                 ]
             }
         ]
