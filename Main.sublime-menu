@@ -7,7 +7,8 @@
                 "caption": "Gradle",
                 "children":
                 [
-                     { "caption": "Log", "command": "test" }
+                    {"id": "Gradle", "caption": "Build current project", "command": "build" },
+                    {"id": "Gradle", "caption": "Test current project", "command": "test" }
                 ]
             }
         ]

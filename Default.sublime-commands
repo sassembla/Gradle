@@ -1,6 +1,6 @@
 [
-    {   "caption": "Gradle: generate build.gradle",
-        "command": "test"
+    {   "caption": "Gradle: build",
+        "command": "build"
     }
     ,{
         "caption": "Gradle: Blame",
