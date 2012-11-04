@@ -9,7 +9,7 @@ import threading
 class Gtest(sublime_plugin.TextCommand):
   def run (self, edit) :
 
-    gradle = sublime.load_settings("Gradle.sublime-settings").get("command").get('gradle')
+    gradle = sublime.load_settings("Gradle.sublime-settings").get("path").get('gradle')
     test = sublime.load_settings("Gradle.sublime-settings").get("command").get('test')
     
     command = gradle + " " + test

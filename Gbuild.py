@@ -9,7 +9,7 @@ import threading
 class Gbuild(sublime_plugin.TextCommand):
   def run (self, edit) :
 
-    gradle = sublime.load_settings("Gradle.sublime-settings").get("command").get('gradle')
+    gradle = sublime.load_settings("Gradle.sublime-settings").get("path").get('gradle')
     build = sublime.load_settings("Gradle.sublime-settings").get("command").get('build')
     
     command = gradle + " " + build
