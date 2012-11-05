@@ -1,3 +1,4 @@
+
 # coding=UTF-8
 
 import os
@@ -10,12 +11,12 @@ import threading
 import glob
 import string
 
-class Gtest(sublime_plugin.TextCommand):
-  def run (self, edit) :
-    print "os is ", os
 
+class Gbuilddependents(sublime_plugin.TextCommand):
+  def run (self, edit) :
     gradle = sublime.load_settings("Gradle.sublime-settings").get("path").get('gradle')
-    command = sublime.load_settings("Gradle.sublime-settings").get("command").get('test')
+    command = sublime.load_settings("Gradle.sublime-settings").get("command").get('buildDependents')
+    print "command  ", command
     buildFilePath = self.getBuildFilePath()
     
     # 別スレッドで実行

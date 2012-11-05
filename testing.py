@@ -8,7 +8,8 @@ import sublime_plugin
 import subprocess
 import shlex
 import threading
-
+import glob
+import string
 
 
 # 色んな実験を行う。
@@ -18,16 +19,45 @@ class Testing(sublime_plugin.TextCommand):
 
     gradle = sublime.load_settings("Gradle.sublime-settings").get("path").get('gradle')
     build = sublime.load_settings("Gradle.sublime-settings").get("command").get('build')
-
-   
+    buildFilePath = self.getBuildFilePath()
+    
     # 別スレッドで実行
-    thread = BuildThread(gradle + " " + build)
+    thread = BuildThread(gradle + " " + build + " " + buildFilePath)
     thread.start()
 
     #statusBarに経過表示
     ThreadProgress(thread, 'gradle '+build+" running...", 'gradle '+build+" Done.")
 
+  # build.gradleを実行時のファイルから探す
+  def getBuildFilePath (self):
+
+    # 今のウインドウに存在するフォルダパスが取れる。全部開いてしまう。
+    folders = self.view.window().folders()
+
+    # 現在のファイル
+    currentFile = self.view.file_name()
     
+    for folder in folders:
+        if currentFile.startswith(folder):
+            currentFolder = folder
+
+
+    # build.gradleを探す
+    os.chdir(currentFolder)
+    buildDotGradles = glob.glob("build.gradle")
+
+    if (0 < len(buildDotGradles)):
+        # 先頭のもの=プロジェクトのもっとも浅い階層にいるbuild.gradleを採用する。
+        buildFilePath = os.path.join(currentFolder, buildDotGradles[0])
+        print "build.gradle found @",buildFilePath
+        return "-b" + " " + "\""+buildFilePath + "\""
+
+    else:
+        print "no build.gradle found. return empty"
+        return ""
+
+
+# スレッド
 class BuildThread(threading.Thread):
   def __init__(self, command):
     self.command = command
@@ -36,33 +66,19 @@ class BuildThread(threading.Thread):
     threading.Thread.__init__(self)
 
   def run(self):
-
     # run command
-    # a = subprocess.call(self.command, shell=True) これは値しか返さない。
-    # a = subprocess.call(self.command, shell=True, stdout=subprocess.PIPE)コレも一緒。
-
-    # a = subprocess.check_call(self.command, shell=True, stdout=subprocess.PIPE)
+    process = subprocess.Popen(shlex.split(self.command.encode('utf8')), stdout=subprocess.PIPE)
     
-    a = subprocess.Popen(shlex.split(self.command.encode('utf8')))
-    print "a is ",a
-
-    output = a.communicate()[0]
-    print "output is ", output
-    
-    # もし遠い将来、Python2.7系がデフォルトで入ったら、callの代わりにcheck_outputを使って
-    # コンソールの内容とパラメータをtail的に返してあげたいところ。
-
-    # while True:
-    #   out = child.stderr.read(1)
-    #   if out == '' and child.poll() != None:
-    #     print "break!"
-    #     break
-    #   if out != '':
-    #     sys.stdout.write(out)
-    #     sys.stdout.flush()
-    #     print "!?"
+    while True:
+      out = process.stdout.read(1)
+      if out == '' and process.poll() != None:
+          break
+      if out != '':
+          sys.stdout.write(out)
+          sys.stdout.flush()
 
 
+# this method is replica of Package Control. this is verrrry good Method for express "something is running".
 class ThreadProgress():
   def __init__(self, thread, message, success_message):
     self.thread = thread
@@ -76,8 +92,6 @@ class ThreadProgress():
 
   def run(self, i):
     if not self.thread.is_alive():
-        if hasattr(self.thread, 'result'):
-            print self.thread.result
         sublime.status_message(self.success_message)
         return
 

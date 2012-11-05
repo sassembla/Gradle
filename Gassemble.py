@@ -1,3 +1,4 @@
+
 # coding=UTF-8
 
 import os
@@ -10,20 +11,20 @@ import threading
 import glob
 import string
 
-class Gtest(sublime_plugin.TextCommand):
+
+class Gassemble(sublime_plugin.TextCommand):
   def run (self, edit) :
-    print "os is ", os
 
     gradle = sublime.load_settings("Gradle.sublime-settings").get("path").get('gradle')
-    command = sublime.load_settings("Gradle.sublime-settings").get("command").get('test')
+    assemble = sublime.load_settings("Gradle.sublime-settings").get("command").get('assemble')
     buildFilePath = self.getBuildFilePath()
     
     # 別スレッドで実行
-    thread = BuildThread(gradle + " " + command + " " + buildFilePath)
+    thread = BuildThread(gradle + " " + assemble + " " + buildFilePath)
     thread.start()
 
     #statusBarに経過表示
-    ThreadProgress(thread, 'gradle '+command+" running...", 'gradle '+command+" Done.")
+    ThreadProgress(thread, 'gradle '+assemble+" running...", 'gradle '+assemble+" Done.")
 
   # build.gradleを実行時のファイルから探す
   def getBuildFilePath (self):
