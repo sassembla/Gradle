@@ -32,6 +32,13 @@
 		// ------------------
 		"check"	:	"check",		// - Runs all checks.
 		"test"	:	"test"			// - Runs the unit tests.
+
+	},
+
+	"utility" : {
+		"webBrowserApp"	:	"Safari.app"
 	}
+
+
 
 }

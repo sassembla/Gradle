@@ -9,6 +9,7 @@
                 [
                     {"id": "Gradle", "caption": "Build current project", "command": "gbuild" },
                     {"id": "Gradle", "caption": "Test current project", "command": "gtest" },
+                    {"id": "Gradle", "caption": "Open Test Report", "command": "gopentest" },
                     {"id": "Gradle", "caption": "Testing", "command": "testing" }
 
                 ]
